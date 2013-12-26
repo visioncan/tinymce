@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='dependency/farbtastic.css' rel='stylesheet' type='text/css'/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>
+    window.jQuery || document.write('<script src="/templates/js/libs/jquery.min.js"><\/script>')
+    </script>
+    <script src='dependency/farbtastic.js'></script>
+    <script>
+    $(document).ready(function () {
+        var defColor = "#f00",
+            colorPicker,
+            storedColors = [];
+
+        if (window.localStorage.getItem('color')) {
+            storedColors = JSON.parse(localStorage["color"]);
+        }
+
+        setPickColor(defColor);
+        colorPicker = $.farbtastic("#picker");
+        colorPicker.setColor(defColor);
+        colorPicker.linkTo(function (color) {
+            setPickColor(color);
+        });
+
+
+        if (storedColors.length > 0) {
+          storedColors.forEach(function (item) {
+              var div = $('<div></div>').css({
+                  'background-color': "#" + item,
+                  'width': '16px',
+                  'height': '16px',
+                  'margin': '5px 4px 4px 0',
+                  'border': '1px solid #808079',
+                  'float': 'left',
+                  'cursor': 'pointer'
+              }).click(function () {
+                  setPickColor("#" + item)
+                  colorPicker.setColor("#" + item);
+              });
+              $("#advtextcolor-previouscolor").append(div);
+          });
+        }
+        $("#color").keyup(function (e) {
+          var val = e.target.value;
+          if (val.indexOf("#") === -1 )
+          {
+            e.target.value = "#" + e.target.value.substring(0, 6)
+          }
+          colorPicker.setColor(e.target.value);
+          setPickColor(e.target.value)
+        });
+    });
+    var setPickColor = function (color) {
+        document.getElementById("color").value = color;
+        document.getElementById("swatches").style.backgroundColor = color;
+    };
+    </script>
+    <style type="text/css">
+    body {
+        margin: 0;
+    }
+    body div,
+    body input {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    #advtextcolor-dialog {
+        width: 260px;
+        margin: 20px auto 0 auto;
+    }
+    #advtextcolor-previouscolor,
+    .group {
+        margin: 8px 50px;
+    }
+    .group div{
+        float: left;
+    }
+    #swatches {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #eee;
+        border-right-width: 0;
+    }
+    #color {
+        width: 120px;
+        height: 30px;
+        font-size: 17px;
+        color: #666;
+        outline: none;
+        margin: 0;
+        padding: 0 5px;
+        display: inline-block;
+        line-height: 1;
+        border: 1px solid #e6e6e6;
+    }
+    #color:focus {
+        border-color: #519bd0;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="advtextcolor-dialog" class="advtextcolor">
+        <div id="picker"></div>
+        <div class="group">
+            <div id="swatches"></div>
+            <input type="text" id="color" name="color" maxlength="7" />
+        </div>
+        <div id="advtextcolor-previouscolor"></div>
+    </div>
+</body>
+</html>
