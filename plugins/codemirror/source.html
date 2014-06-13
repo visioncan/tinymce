@@ -2,12 +2,12 @@
 <html>
 <link rel="stylesheet" type="text/css" href="codemirror-mod/codemirror-composition-mod.css" />
 <head>
-<script type="text/javascript">
+<script>
 
 /**
  * source.html
  *
- * Copyright 2013 Web Power, www.webpower.nl
+ * Copyright 2013-2014 Web Power, www.webpower.nl
  * @author Arjan Haverkamp
  */
 
@@ -16,6 +16,7 @@ var tinymce,     // Reference to TinyMCE
 	editor,      // Reference to TinyMCE editor
 	codemirror,  // CodeMirror instance
 	chr = 0,     // Unused utf-8 character, placeholder for cursor
+	isMac = /macintosh|mac os/i.test(navigator.userAgent),
 	CMsettings;  // CodeMirror settings
 
 function inArray(key, arr)
@@ -57,7 +58,7 @@ function inArray(key, arr)
 			'addon/selection/active-line.js'
 		],
 		cssFiles: [// Default CSS files
-      'lib/codemirror.css',
+			'lib/codemirror.css',
 			'addon/dialog/dialog.css'
 		]
 	};
@@ -112,8 +113,8 @@ function start()
 	var head = parent.document.querySelectorAll('.mce-foot')[0],
 		div = parent.document.createElement('div'),
 		td1 = '<td style="font-size:11px;color:#555;padding:0 4px;border-bottom: 1px solid #9E9E9E;">',
-		td2 = '<td style="font-size:11px;padding-right:5px; ">';
-	div.innerHTML = '<table cellspacing="0" cellpadding="0" style="border-spacing:4px"><tr>' + td1 + 'Ctrl-F</td>' + td2 + tinymce.translate('Start search') + '</td>' + td1 + 'Ctrl-G</td>' + td2 + tinymce.translate('Find next') + '</td>' + td1 + 'Shift-Ctrl-G</td>' + td2 + tinymce.translate('Find previous') + '</td></tr>' + '<tr>' + td1 + 'Shift-Ctrl-F</td>' + td2 + tinymce.translate('Replace') + '</td>' + td1 + 'Shift-Ctrl-R</td>' + td2 + tinymce.translate('Replace all') + '</td></tr></table>';
+		td2 = '<td style="font-size:11px;padding-right:5px">';
+	div.innerHTML = '<table cellspacing="0" cellpadding="0" style="border-spacing:4px"><tr>' + td1 + (isMac ? '&#8984;-F' : 'Ctrl-F</td>') + td2 + tinymce.translate('Start search') + '</td>' + td1 + (isMac ? '&#8984;-G' : 'Ctrl-G') + '</td>' + td2 + tinymce.translate('Find next') + '</td>' + td1 + (isMac ? '&#8984;-Alt-F' : 'Shift-Ctrl-F') + '</td>' + td2 + tinymce.translate('Find previous') + '</td></tr>' + '<tr>' + td1 + (isMac ? '&#8984;-Alt-F' : 'Shift-Ctrl-F') + '</td>' + td2 + tinymce.translate('Replace') + '</td>' + td1 + (isMac ? 'Shift-&#8984;-Alt-F' : 'Shift-Ctrl-R') +'</td>' + td2 + tinymce.translate('Replace all') + '</td></tr></table>';
 	div.style.position = 'absolute';
 	div.style.left = div.style.bottom = '5px';
 	head.appendChild(div);
@@ -145,6 +146,7 @@ function start()
 	});
 
 	CMsettings.config.value = html;
+
 	// Instantiante CodeMirror:
 	codemirror = CodeMirror(document.body, CMsettings.config);
 	codemirror.isDirty = false;
@@ -172,18 +174,23 @@ function submit()
 {
 	"use strict";
 
-	var cc = '&#x0;', isDirty = codemirror.isDirty;
+	var cc = '&#x0;', isDirty = codemirror.isDirty, doc = codemirror.doc;
+
+	if (doc.somethingSelected()) {
+		// Clear selection:
+		doc.setCursor(doc.getCursor());
+	}
 
 	// Insert cursor placeholder (&#x0;)
-	codemirror.doc.replaceSelection(cc);
+	doc.replaceSelection(cc);
 
 	var pos = codemirror.getCursor(),
-		curLineHTML = codemirror.doc.getLine(pos.line);
+		curLineHTML = doc.getLine(pos.line);
 
 	if (findDepth(curLineHTML, cc) !== 0) {
 		// Cursor is inside a <tag>, don't set cursor:
 		curLineHTML = curLineHTML.replace(cc, '');
-		codemirror.doc.setLine(pos.line, curLineHTML);
+		doc.setLine(pos.line, curLineHTML);
 	}
 
 	// Submit HTML to TinyMCE:
@@ -211,12 +218,8 @@ body {
 
 .CodeMirror {
 	height: 100%;
-	font-size: 1em;
-	line-height: 1.4em;
-  padding: 0 !important;
-  margin: 0 !important;
-  box-shadow: inset 0 0 0 #fff !important;
-  -webkit-box-shadow: inset 0 0 0 #fff !important;
+	font-size: 12px;
+	line-height: 18px;
 }
 
 .CodeMirror-activeline-background {

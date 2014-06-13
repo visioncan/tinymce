@@ -1,4 +1,4 @@
-tinymce.addI18n('nl',{
+tinymce.addI18n('zh_TW',{
 	'HTML source code': 'HTML 原始碼',
 	'Start search': '搜尋',
 	'Find next': '找下一個',

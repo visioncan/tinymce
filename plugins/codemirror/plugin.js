@@ -19,8 +19,8 @@ tinymce.PluginManager.add('codemirror', function(editor, url) {
 		editor.selection.setContent('<span class="CmCaReT" style="display:none">&#0;</span>');
 
 		// Open editor window
-    var winMinHeight = window.innerHeight - 40 - 50;
-    var winHeight = winMinHeight < 700 ? winMinHeight : 700;
+        var winMinHeight = window.innerHeight - 120;
+        var winHeight = winMinHeight < 700 ? winMinHeight : 700;
 		var win = editor.windowManager.open({
 			title: 'HTML source code',
 			url: url + '/source.html',
