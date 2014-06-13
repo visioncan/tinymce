@@ -175,5 +175,11 @@ tinymce.addI18n('zh_TW',{
 "Font Family": "\u5b57\u9ad4",
 "Font Sizes": "\u6587\u5b57\u5927\u5c0f",
 "Edit image": "\u63d2\u5165\/\u7de8\u8f2f\u5716\u7247",
-"The URL you entered seems to be an external link. Do you want to add the required http:// prefix?": "\u60a8\u8f38\u5165\u7684\u7db2\u5740\u4f3c\u4e4e\u662f\u4e00\u500b\u5916\u90e8\u93c8\u63a5\u3002\u4f60\u60f3\u6dfb\u52a0\u6240\u9700\u7684http:\/\/\u524d\u7db4\uff1f"
+"The URL you entered seems to be an external link. Do you want to add the required http:// prefix?": "\u60a8\u8f38\u5165\u7684\u7db2\u5740\u4f3c\u4e4e\u662f\u4e00\u500b\u5916\u90e8\u93c8\u63a5\u3002\u4f60\u60f3\u6dfb\u52a0\u6240\u9700\u7684http:\/\/\u524d\u7db4\uff1f",
+"HTML source code": "HTML 原始碼",
+"Start search": "搜尋",
+"Find next": "找下一個",
+"Find previous": "找上一個",
+"Replace": "取代",
+"Replace all": "取代全部"
 });
