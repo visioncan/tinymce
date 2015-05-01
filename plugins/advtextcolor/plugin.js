@@ -106,7 +106,7 @@ tinymce.PluginManager.add('advtextcolor', function(editor, url) {
 				} else {
 					color = colors[i];
 					html += (
-						'<td>' +
+						'<td class="mce-grid-cell">' +
 							'<div id="' + ctrl._id + '-' + i + '"' +
 								' data-mce-color="' + color.color + '"' +
 								' role="option"' +
