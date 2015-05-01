@@ -23,7 +23,7 @@ tinymce.PluginManager.add('codemirror', function(editor, url) {
         var winHeight = winMinHeight < 700 ? winMinHeight : 700;
 		var win = editor.windowManager.open({
 			title: 'HTML source code',
-			url: url + '/source.html',
+			url: url + '/source.html?' + new Date().getTime(),
 			width: 850,
 			height: winHeight,
 			resizable : true,
